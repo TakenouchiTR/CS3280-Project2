@@ -41,6 +41,24 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         #Prevents the terminal from being filled with error messages
         except socket.error:
             pass
+    
+    def validate_resource(self, resource):
+        """
+        Checks if the resource is in the valid format
+        Args: resource - the resource from the request
+        Return: True iff the resource starts with "url="; otherwise False
+        """
+        return resource.startswith(self.url_query)
+    
+    def get_query_from_resource(self, resource):
+        """
+        Gets the query from the request's resource
+        Args: resource - the resource from the request
+        Return: The resource's query
+        """
+        start_index = len(self.url_query)
+        return resource[start_index:].split('&')
+
 
 def main():
     """
