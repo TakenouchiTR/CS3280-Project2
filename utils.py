@@ -1,6 +1,11 @@
+#!/usr/bin/env python3
 import bs4
 import requests
 import re
+
+__author__ = 'CS3280'
+__version__ = 'Fall 2021'
+__pylint__ = 'v1.8.3'
 
 def get_links(url):
     href_regex = re.compile(r"(.*://)?(.*)")
