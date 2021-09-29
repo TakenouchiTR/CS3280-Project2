@@ -49,7 +49,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         """
         Checks if the resource is in the valid format
         Args: resource - the resource from the request
-        Return: True iff the resource starts with "url="; otherwise False
+        Return: True if the resource starts with "url="; otherwise False
         """
         return resource.startswith(self.url_query)
     
