@@ -30,8 +30,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
                 self.log_message('resource: %s', self.path)
                 self.send_error(404, 'Expecting {}<url>'.format(self.url_query))
 
-            start_index = len(self.url_query)
-            query = resource[start_index:].split('&')
+            query = self.get_query_from_resource(resource)
             print(query)
 
             body = self.process_and_respond(query)
