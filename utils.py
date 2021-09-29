@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Utilities for project 2
+Gets the HTML for a specified website and searches for all of the links within
+anchor tags.
+"""
 import bs4
 import requests
 import re
