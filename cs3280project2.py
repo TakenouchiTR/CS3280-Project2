@@ -13,6 +13,9 @@ __version__ = "Fall 2021"
 __pylint__ = "v1.8.3"
 
 class Project2Server(http.server.BaseHTTPRequestHandler):
+    """
+    HTTP server made for handling requests to gather links on webpages
+    """
     URL_QUERY = "url="
 
     def do_GET(self): #pylint: disable=invalid-name
@@ -27,10 +30,10 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
 
             if not self.validate_resource(resource):
                 self.log_message("resource: %s", self.path)
-                self.send_error(404, "Expecting {}<url>".format(self.URL_QUERY))
+                self.send_error(404, f"Expecting {self.URL_QUERY}<url>")
 
             query = self.get_query_from_resource(resource)
-            body = self.create_message_body(query[0])
+            body = create_message_body(query[0])
 
             self.complete_response(body)
 
@@ -57,47 +60,6 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         start_index = len(self.URL_QUERY)
         return resource[start_index:].split("&")
 
-    def create_message_body(self, query):
-        """
-        Creates the HTML for the response.
-        Args: query - The queried URL
-        Return: The response page's HTML
-        """
-        
-        links = utils.get_links_from_url(query)
-
-        body = "<!DOCTYPE html>\n"
-        body += "<html>\n<head>\n<head>\n"
-        body += "<body style='color: #ccc; background-color: #111'>\n"
-        body += "<h1>Links found in <a style='color: #66f' href='{}'>{}</a>:</h1>\n".format(query, query)
-        body += "<ul>\n"
-        for link in links:
-            style = self.get_style_for_link(link)
-            body += "<li><span{}>{}</span></li>\n".format(style, link)
-        body += "</ul>\n"
-        body += "</body></html>"
-
-        return body
-
-    def get_style_for_link(self, link):
-        """
-        Gets a special style for non-absolute links (relative, phone, etc).
-        Args: link - The specified link to check
-        Return: The appropriate style for non-absolute links; otherwise a blank string
-        """
-        style_regexes = [
-            (re.compile(r"^/"), " style='color: goldenrod;'"),
-            (re.compile(r"^#"), " style='color: #9f9;'"),
-            (re.compile(r"^tel:"), " style='color: #faa;'"),
-            (re.compile(r"^mailto:"), " style='color: #f9f;'"),
-            (re.compile(r"^javascript"), " style='color: #aaf;'"),
-        ]
-
-        for regex, style in style_regexes:
-            if regex.match(link) != None:
-                return style
-        return ""
-
     def complete_response(self, body):
         """
         Attaches the response body and sends it to the requester.
@@ -108,6 +70,52 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html")
         self.end_headers()
         self.wfile.write(bytes(body, "UTF-8"))
+
+def create_message_body(query):
+    """
+    Creates the HTML for the response.
+    Args: query - The queried URL
+    Return: The response page's HTML
+    """
+
+    links = utils.get_links_from_url(query)
+
+    body = "<!DOCTYPE html>\n"
+    body += "<html>\n<head>\n<head>\n"
+    body += "<body style='color: #ccc; background-color: #111'>\n"
+
+    body += "<h1>"
+    body += f"Links found in <a style='color: #66f' href='{query}'>{query}</a>:"
+    body += "</h1>\n"
+
+    body += "<ul>\n"
+    for link in links:
+        style = get_style_for_link(link)
+        body += f"<li><span{style}>{link}</span></li>\n"
+    body += "</ul>\n"
+
+    body += "</body></html>"
+
+    return body
+
+def get_style_for_link(link):
+    """
+    Gets a special style for non-absolute links (relative, phone, etc).
+    Args: link - The specified link to check
+    Return: The appropriate style for non-absolute links; otherwise a blank string
+    """
+    style_regexes = [
+        (re.compile(r"^/"), " style='color: goldenrod;'"),
+        (re.compile(r"^#"), " style='color: #9f9;'"),
+        (re.compile(r"^tel:"), " style='color: #faa;'"),
+        (re.compile(r"^mailto:"), " style='color: #f9f;'"),
+        (re.compile(r"^javascript"), " style='color: #aaf;'"),
+    ]
+
+    for regex, style in style_regexes:
+        if regex.match(link) is not None:
+            return style
+    return ""
 
 def main():
     """
