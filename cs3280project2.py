@@ -12,7 +12,7 @@ __version__ = "Fall 2021"
 __pylint__ = "v1.8.3"
 
 class Project2Server(http.server.BaseHTTPRequestHandler):
-    url_query = "url="
+    URL_QUERY = "url="
 
     def do_GET(self): #pylint: disable=invalid-name
         """
@@ -26,8 +26,8 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
             print(resource)
 
             if not self.validate_resource(resource):
-                self.log_message('resource: %s', self.path)
-                self.send_error(404, 'Expecting {}<url>'.format(self.url_query))
+                self.log_message("resource: %s", self.path)
+                self.send_error(404, "Expecting {}<url>".format(self.URL_QUERY))
 
             query = self.get_query_from_resource(resource)
             print(query)
@@ -50,8 +50,8 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         Args: resource - the resource from the request
         Return: True if the resource starts with "url="; otherwise False
         """
-        return resource.startswith(self.url_query)
-    
+        return resource.startswith(self.URL_QUERY)
+
     def get_query_from_resource(self, resource):
         """
         Gets the query from the request's resource
