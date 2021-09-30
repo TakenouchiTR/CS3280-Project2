@@ -3,7 +3,6 @@
 This script runs an HTTP server that accepts a url as a resource, then
 retrieves all of the links from the anchor tags of the webpage.
 """
-import sys
 import http.server
 import socket
 import utils
