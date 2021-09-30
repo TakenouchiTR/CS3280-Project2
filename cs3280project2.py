@@ -68,7 +68,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
 
         body = "<!DOCTYPE html>\n"
         body += "<html>\n<head>\n<head>\n"
-        body += "<body style='color: white; background-color: #111'>\n"
+        body += "<body style='color: #ccc; background-color: #111'>\n"
         body += "<h1>Links found in <a style='color: #66f' href='{}'>{}</a>:</h1>\n".format(query, query)
         body += "<ul>\n"
         for link in links:
@@ -89,7 +89,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
             (re.compile(r"^/"), " style='color: goldenrod;'"),
             (re.compile(r"^#"), " style='color: #9f9;'"),
             (re.compile(r"^tel:"), " style='color: #faa;'"),
-            (re.compile(r"^mailto:"), " style='color: burgundy;'"),
+            (re.compile(r"^mailto:"), " style='color: #f9f;'"),
             (re.compile(r"^javascript"), " style='color: #aaf;'"),
         ]
 
