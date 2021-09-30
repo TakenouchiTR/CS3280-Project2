@@ -53,8 +53,8 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         Args: resource - the resource from the request
         Return: The resource's query
         """
-        start_index = len(self.url_query)
-        return resource[start_index:].split('&')
+        start_index = len(self.URL_QUERY)
+        return resource[start_index:].split("&")
 
     def complete_response(self, body):
         """
