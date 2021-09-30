@@ -56,6 +56,28 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         start_index = len(self.URL_QUERY)
         return resource[start_index:].split("&")
 
+    def create_message_body(self, query):
+        """
+        Creates the HTML for the response.
+        Args: query - The queried URL
+        Return: The response page's HTML
+        """
+        
+        links = utils.get_links_from_url(query)
+
+        body = "<!DOCTYPE html>\n"
+        body += "<html>\n<head>\n<head>\n"
+        body += "<body style='color: white; background-color: #111'>\n"
+        body += "<h1>Links found in <a style='color: #66f' href='{}'>{}</a>:</h1>\n".format(query, query)
+        body += "<ul>\n"
+        for link in links:
+            style = self.get_style_for_link(link)
+            body += "<li><span{}>{}</span></li>\n".format(style, link)
+        body += "</ul>\n"
+        body += "</body></html>"
+
+        return body
+
     def complete_response(self, body):
         """
         Attaches the response body and sends it to the requester.
