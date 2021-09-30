@@ -7,9 +7,9 @@ import http.server
 import socket
 import utils
 
-__author__ = 'CS3280'
-__version__ = 'Fall 2021'
-__pylint__ = 'v1.8.3'
+__author__ = "Shawn Carter"
+__version__ = "Fall 2021"
+__pylint__ = "v1.8.3"
 
 class Project2Server(http.server.BaseHTTPRequestHandler):
     url_query = "url="
