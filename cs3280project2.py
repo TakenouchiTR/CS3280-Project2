@@ -23,14 +23,12 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         """
         try:
             resource = self.path[1:]
-            print(resource)
 
             if not self.validate_resource(resource):
                 self.log_message("resource: %s", self.path)
                 self.send_error(404, "Expecting {}<url>".format(self.URL_QUERY))
 
             query = self.get_query_from_resource(resource)
-            print(query)
 
             body = self.process_and_respond(query)
             self.send_response(200)
@@ -43,7 +41,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         #Prevents the terminal from being filled with error messages
         except socket.error:
             pass
-    
+
     def validate_resource(self, resource):
         """
         Checks if the resource is in the valid format
