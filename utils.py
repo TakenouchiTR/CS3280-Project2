@@ -8,9 +8,9 @@ import bs4
 import requests
 import re
 
-__author__ = 'Shawn Carter'
-__version__ = 'Fall 2021'
-__pylint__ = 'v1.8.3'
+__author__ = "Shawn Carter"
+__version__ = "Fall 2021"
+__pylint__ = "v1.8.3"
 
 def get_links(url):
     href_regex = re.compile(r"(.*://)?(.*)")
