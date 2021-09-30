@@ -113,7 +113,7 @@ def main():
     """
     Entry point for the script
     """
-    server_address_tuple = ('localhost', 3280)
+    server_address_tuple = ("localhost", 3280)
     server = http.server.HTTPServer(server_address_tuple, Project2Server)
     server.serve_forever()
 
