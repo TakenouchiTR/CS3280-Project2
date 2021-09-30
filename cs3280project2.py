@@ -29,6 +29,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
                 self.send_error(404, "Expecting {}<url>".format(self.URL_QUERY))
 
             query = self.get_query_from_resource(resource)
+            body = self.create_message_body(query[0])
 
             body = self.process_and_respond(query)
             self.send_response(200)
