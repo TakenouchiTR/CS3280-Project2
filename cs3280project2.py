@@ -31,11 +31,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
             query = self.get_query_from_resource(resource)
             body = self.create_message_body(query[0])
 
-            body = self.process_and_respond(query)
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/html')
-            self.end_headers()
-            self.wfile.write(bytes(body, 'UTF-8'))
+            self.complete_response(body)
 
         except ValueError as exception:
             self.send_error(500, str(exception))
@@ -60,6 +56,16 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         start_index = len(self.url_query)
         return resource[start_index:].split('&')
 
+    def complete_response(self, body):
+        """
+        Attaches the response body and sends it to the requester.
+        Args: body - The response page's HTML
+        Return: None
+        """
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes(body, "UTF-8"))
 
 def main():
     """
