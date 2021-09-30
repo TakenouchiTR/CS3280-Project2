@@ -23,8 +23,10 @@ def get_links_from_url(url):
     response = requests.get(url)
     soup = bs4.BeautifulSoup(response.text, features="html.parser")
     tags = soup.find_all("a", href=True)
-    result = []
+    links = []
+
     for tag in tags:
         if href_regex.match(tag["href"]) != None:
-            result.append(href_regex.match(tag["href"])[2])
-    return result
+            links.append(href_regex.match(tag["href"])[2])
+    
+    return links
