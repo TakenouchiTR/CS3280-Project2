@@ -13,6 +13,11 @@ __version__ = "Fall 2021"
 __pylint__ = "v1.8.3"
 
 def get_links_from_url(url):
+    """
+    Retrieves all of the links from the website at the specified URL
+    Args: url - The URL to search
+    Return: The list of links from the website
+    """
     href_regex = re.compile(r"(.*://)?(.*)")
 
     response = requests.get(url)
