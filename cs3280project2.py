@@ -5,6 +5,7 @@ retrieves all of the links from the anchor tags of the webpage.
 """
 import http.server
 import socket
+import re
 import utils
 
 __author__ = "Shawn Carter"
@@ -77,6 +78,25 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         body += "</body></html>"
 
         return body
+
+    def get_style_for_link(self, link):
+        """
+        Gets a special style for non-absolute links (relative, phone, etc).
+        Args: link - The specified link to check
+        Return: The appropriate style for non-absolute links; otherwise a blank string
+        """
+        style_regexes = [
+            (re.compile(r"^/"), " style='color: goldenrod;'"),
+            (re.compile(r"^#"), " style='color: #9f9;'"),
+            (re.compile(r"^tel:"), " style='color: #faa;'"),
+            (re.compile(r"^mailto:"), " style='color: burgundy;'"),
+            (re.compile(r"^javascript"), " style='color: #aaf;'"),
+        ]
+
+        for regex, style in style_regexes:
+            if regex.match(link) != None:
+                return style
+        return ""
 
     def complete_response(self, body):
         """
