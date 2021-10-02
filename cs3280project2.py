@@ -17,7 +17,8 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
     """
     URL_QUERY = "pages?"
 
-    def do_GET(self): #pylint: disable=invalid-name
+    def do_GET(self):
+        #pylint: disable=invalid-name
         """
         Overrides do_GET()
         Handles GET requests to the server
