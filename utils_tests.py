@@ -36,7 +36,9 @@ class FakeResponse:
         text += "<a href='#id'></a>"
         text += "<a href='javascript:void(0);'></a>"
         response.text = text
-        return responseclass TestGetLinksFromUrl(unittest.TestCase):
+        return response
+
+class TestGetLinksFromUrl(unittest.TestCase):
     """
     Tests for the get_links_from_url() function
     """
