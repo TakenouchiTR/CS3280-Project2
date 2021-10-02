@@ -16,7 +16,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
     """
     HTTP server made for handling requests to gather links on webpages
     """
-    URL_QUERY = "url="
+    URL_QUERY = "pages?"
 
     def do_GET(self): #pylint: disable=invalid-name
         """
