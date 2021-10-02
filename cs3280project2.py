@@ -5,7 +5,6 @@ retrieves all of the links from the anchor tags of the webpage.
 """
 import http.server
 import socket
-import re
 import utils
 
 __author__ = "Shawn Carter"
@@ -82,33 +81,13 @@ def create_message_body(query):
 
     body += "<ul>\n"
     for link in links:
-        style = get_style_for_link(link)
+        style = utils.get_style_for_link(link)
         body += f"<li><span{style}>{link}</span></li>\n"
     body += "</ul>\n"
 
     body += "</body></html>"
 
     return body
-
-def get_style_for_link(link):
-    """
-    Gets a special style for non-absolute links (relative, phone, etc).
-    Args: link - The specified link to check
-    Return: The appropriate style for non-absolute links; otherwise a blank string
-    """
-    style_patterns = [
-        (r"^/", " style='color: goldenrod;'"),
-        (r"^#", " style='color: #9f9;'"),
-        (r"^tel:", " style='color: #faa;'"),
-        (r"^mailto:", " style='color: #f9f;'"),
-        (r"^javascript", " style='color: #aaf;'"),
-    ]
-
-    for pattern, style in style_patterns:
-        regex = re.compile(pattern)
-        if regex.match(link) is not None:
-            return style
-    return ""
 
 def main():
     """

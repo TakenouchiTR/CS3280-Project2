@@ -30,3 +30,23 @@ def get_links_from_url(url, request_handler = requests):
         links.append(href_regex.match(tag["href"])[2])
 
     return links
+
+def get_style_for_link(link):
+    """
+    Gets a special style for non-absolute links (relative, phone, etc).
+    Args: link - The specified link to check
+    Return: The appropriate style for non-absolute links; otherwise a blank string
+    """
+    style_patterns = [
+        (r"^/", " style='color: goldenrod;'"),
+        (r"^#", " style='color: #9f9;'"),
+        (r"^tel:", " style='color: #faa;'"),
+        (r"^mailto:", " style='color: #f9f;'"),
+        (r"^javascript", " style='color: #aaf;'"),
+    ]
+
+    for pattern, style in style_patterns:
+        regex = re.compile(pattern)
+        if regex.match(link) is not None:
+            return style
+    return ""
