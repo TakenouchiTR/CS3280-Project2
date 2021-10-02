@@ -28,7 +28,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         try:
             resource = self.path[1:]
 
-            if not self.validate_resource(resource):
+            if not resource.startswith(self.URL_QUERY):
                 self.log_message("resource: %s", self.path)
                 self.send_error(404, f"Expecting {self.URL_QUERY}<url>")
 
@@ -42,14 +42,6 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         #Prevents the terminal from being filled with error messages
         except socket.error:
             pass
-
-    def validate_resource(self, resource):
-        """
-        Checks if the resource is in the valid format
-        Args: resource - the resource from the request
-        Return: True if the resource starts with "url="; otherwise False
-        """
-        return resource.startswith(self.URL_QUERY)
 
     def get_query_from_resource(self, resource):
         """
