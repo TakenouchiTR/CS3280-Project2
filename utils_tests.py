@@ -36,4 +36,60 @@ class FakeResponse:
         text += "<a href='#id'></a>"
         text += "<a href='javascript:void(0);'></a>"
         response.text = text
-        return response
+        return responseclass TestGetLinksFromUrl(unittest.TestCase):
+    """
+    Tests for the get_links_from_url() function
+    """
+    def test_valid_response_text(self):
+        """
+        Checks if a valid response is scraped correctly
+        """
+        url = "https://www.example.com"
+        links = utils.get_links_from_url(url, FakeResponse)
+        expected_links = [
+            "www.example.com",
+            "www.example.org",
+            "tel:1234567890",
+            "mailto:example@example.com",
+            "/dir/page.html",
+            "#id",
+            "javascript:void(0);",
+        ]
+
+        self.assertEqual(links, expected_links)
+
+    def test_request_handler_lacks_get_function(self):
+        """
+        Checks that an AttributeError is raised if request_handler
+        lacks a get() function
+        """
+        url = "https://www.example.com"
+        with self.assertRaises(AttributeError):
+            utils.get_links_from_url(url, True)
+
+    def test_none_for_url(self):
+        """
+        Checks that a MissingSchema exception is raised if None is used
+        as the url
+        """
+        with self.assertRaises(requests.exceptions.MissingSchema):
+            utils.get_links_from_url(None)
+
+    def test_empty_string(self):
+        """
+        Checks that a MissingSchema exception is raised if an empty string
+        is used for the url
+        """
+        with self.assertRaises(requests.exceptions.MissingSchema):
+            utils.get_links_from_url("")
+
+    def test_url_without_protocol(self):
+        """
+        Checks that a MissingSchema exception is raised if the url is missing
+        the protocol
+        """
+        url = "www.example.com"
+        with self.assertRaises(requests.exceptions.MissingSchema):
+            utils.get_links_from_url(url)
+
+class TestGetStyleForLink(unittest.TestCase):
