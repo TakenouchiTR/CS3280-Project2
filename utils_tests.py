@@ -29,6 +29,7 @@ class FakeResponse:
         """
         response = FakeResponse()
         text = "<a href='https://www.example.com'></a>"
+        text += "<a href='www.example.org'></a>"
         text += "<a href='tel:1234567890'></a>"
         text += "<a href='mailto:example@example.com'></a>"
         text += "<a href='/dir/page.html'></a>"
