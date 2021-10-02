@@ -4,6 +4,7 @@ Utilities for project 2
 Gets the HTML for a specified website and searches for all of the links within
 anchor tags.
 """
+from logging import exception
 import re
 import requests
 import bs4
