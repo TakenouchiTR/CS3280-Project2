@@ -33,7 +33,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
                 self.send_error(404, f"Expecting {self.URL_QUERY}<url>")
 
             query = self.get_query_from_resource(resource)
-            body = create_message_body(query[0])
+            body = create_message_body(query)
 
             self.complete_response(body)
 
@@ -50,7 +50,7 @@ class Project2Server(http.server.BaseHTTPRequestHandler):
         Return: The resource's query
         """
         start_index = len(self.URL_QUERY)
-        return resource[start_index:].split("&")
+        return resource[start_index:]
 
     def complete_response(self, body):
         """
