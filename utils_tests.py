@@ -93,3 +93,65 @@ class FakeResponse:
             utils.get_links_from_url(url)
 
 class TestGetStyleForLink(unittest.TestCase):
+    """
+    Tests for the get_style_for_link() function
+    """
+    def test_absolute_href(self):
+        """
+        Checks for a valid return for an absolute url
+        """
+        url = "www.example.com"
+        expected = ""
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
+
+    def test_phone_href(self):
+        """
+        Checks for a valid return for a phone url
+        """
+        url = "tel:1234567890"
+        expected = " style='color: #faa;'"
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
+
+    def test_email_href(self):
+        """
+        Checks for a valid return for an absolute url
+        """
+        url = "mailto:example@example.com"
+        expected = " style='color: #f9f;'"
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
+
+    def test_relative_href(self):
+        """
+        Checks for a valid return for an absolute url
+        """
+        url = "/dir/page.html"
+        expected = " style='color: goldenrod;'"
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
+
+    def test_id_href(self):
+        """
+        Checks for a valid return for an absolute url
+        """
+        url = "#id"
+        expected = " style='color: #9f9;'"
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
+
+    def test_javascript_href(self):
+        """
+        Checks for a valid return for an absolute url
+        """
+        url = "javascript:void(0);"
+        expected = " style='color: #aaf;'"
+        actual = utils.get_style_for_link(url)
+
+        self.assertEqual(expected, actual)
